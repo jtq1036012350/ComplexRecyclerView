@@ -30,7 +30,6 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
 //        listView = (ListView) findViewById(R.id.listview);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-//        swipeRefreshView = (MySwipeRefreshView) findViewById(R.id.myswiperefreshview);
         initdata();
 //        adapter = new MyListViewAdapter(this, users, getSupportFragmentManager());
 //        listView.setAdapter(adapter);
@@ -78,6 +77,7 @@ public class MainActivity extends FragmentActivity {
                         myRecyclerViewAdapter.notifyDataSetChanged();
                         Toast.makeText(MainActivity.this, "刷新了一条数据", Toast.LENGTH_SHORT).show();
                         // 加载完数据设置为不刷新状态，将下拉进度收起来
+                        recyclerView.scrollBy(0,30);
                         mRefreshView.stopLoadMore();
                     }
                 }, 1200);
