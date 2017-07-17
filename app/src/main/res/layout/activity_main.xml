@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--自定义View实现SwipeRefreshLayout，添加上拉加载更多的功能-->
+    <com.marsjiang.complexrecyclerview.view.MySwipeRefreshView
+        android:id="@+id/myswiperefreshview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </com.marsjiang.complexrecyclerview.view.MySwipeRefreshView>
+
+    <com.andview.refreshview.XRefreshView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/mRefreshView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Hello World!"/>
+    </com.andview.refreshview.XRefreshView>
+</android.support.constraint.ConstraintLayout>
