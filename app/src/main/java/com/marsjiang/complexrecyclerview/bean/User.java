@@ -17,11 +17,23 @@ public class User implements Serializable {
     //第四种布局的字段
     private String item4_str;
 
-    public User(String item1_str, String item2_str, String item3_str, String item4_str) {
+    //第五种布局的字段
+    private String item5_str;
+
+    public User(String item1_str, String item2_str, String item3_str, String item4_str, String item5_str) {
         this.item1_str = item1_str;
         this.item2_str = item2_str;
         this.item3_str = item3_str;
         this.item4_str = item4_str;
+        this.item5_str = item5_str;
+    }
+
+    public String getItem5_str() {
+        return item5_str;
+    }
+
+    public void setItem5_str(String item5_str) {
+        this.item5_str = item5_str;
     }
 
     public String getItem4_str() {

@@ -3,6 +3,7 @@ package com.marsjiang.complexrecyclerview.adapter;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +17,13 @@ import android.widget.Toast;
 import com.marsjiang.complexrecyclerview.R;
 import com.marsjiang.complexrecyclerview.bean.User;
 import com.marsjiang.complexrecyclerview.util.CommonUtil;
+import com.marsjiang.complexrecyclerview.widget.MyStaggerGrildLayoutManger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * RecyclerView的Adapter
  * Created by Jiang on 2017-07-17.
  */
 
@@ -35,6 +39,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private final int TYPE2 = 1;
     private final int TYPE3 = 2;
     private final int TYPE4 = 3;
+    private final int TYPE5 = 4;
+
+    private MyRecyclerViewChileAdapter myRecyclerViewChileAdapter;
 
     public MyRecyclerViewAdapter(Context ctx, List<User> objects) {
         this.ctx = ctx;
@@ -59,6 +66,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             case TYPE4:
                 holder = new ViewHolder4(View.inflate(ctx, R.layout.horizontal_crollview_main, null));
                 break;
+            case TYPE5:
+                holder = new ViewHolder5(View.inflate(ctx, R.layout.itemlayout4, null));
+                break;
             default:
                 break;
         }
@@ -69,6 +79,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         //由于木有相关的viewType参数，只能通过方法来获取了
         int viewType = getItemViewType(position);
+        if (viewType == -1) {
+            return;
+        }
         switch (viewType) {
             case TYPE1:
                 ((ViewHolder1) holder).setData();
@@ -81,6 +94,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 break;
             case TYPE4:
                 ((ViewHolder4) holder).setData((ViewHolder4) holder);
+                break;
+            case TYPE5:
+                ((ViewHolder5) holder).setData(position);
                 break;
         }
     }
@@ -103,9 +119,12 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             return TYPE2;
         } else if (u.getItem3_str() != null) {//如果前两个字段都为空，那就一定是加载第三个布局啦。
             return TYPE3;
-        } else {
+        } else if (u.getItem4_str() != null) {
             return TYPE4;
+        } else if (u.getItem5_str() != null) {
+            return TYPE5;
         }
+        return -1;
     }
 
     @Override
@@ -195,4 +214,28 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             }
         }
     }
+
+    public class ViewHolder5 extends RecyclerView.ViewHolder {
+        private RecyclerView recyclerView;
+        private ArrayList<String> arr;
+
+        public ViewHolder5(View itemView) {
+            super(itemView);
+            arr = new ArrayList<>();
+            for (int i = 0; i < 50; i++) {
+                arr.add(i + "");
+            }
+            recyclerView = (RecyclerView) itemView.findViewById(R.id.recycler_view);
+        }
+
+        public void setData(int position) {
+            //初始化recycleview 的适配器 以及布局管理器， 这里的管理器用的是流式布局，至于为何是流式布局，
+            // 博客以及github上面有比较详细的讲解，欢迎查看，
+
+            myRecyclerViewChileAdapter = new MyRecyclerViewChileAdapter(ctx, arr);
+            recyclerView.setAdapter(myRecyclerViewChileAdapter);
+            recyclerView.setLayoutManager(new MyStaggerGrildLayoutManger(ctx, 2, StaggeredGridLayoutManager.VERTICAL));
+        }
+    }
+
 }

@@ -39,7 +39,7 @@ public class MainActivity extends FragmentActivity {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(myRecyclerViewAdapter);
-
+        recyclerView.smoothScrollToPosition(0);
         mRefreshView = (XRefreshView) findViewById(R.id.mRefreshView);
 
         //相关下拉刷新的设置
@@ -53,10 +53,10 @@ public class MainActivity extends FragmentActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        users.add(0, new User("第一个布局", null, null, null));
+                        users.add(0, new User("第一个布局", null, null, null, null));
                         myRecyclerViewAdapter.notifyDataSetChanged();
                         Toast.makeText(MainActivity.this, "刷新了一条数据", Toast.LENGTH_SHORT).show();
-
+                        recyclerView.smoothScrollToPosition(0);
                         // 加载完数据设置为不刷新状态，将下拉进度收起来
                         mRefreshView.stopRefresh();
                     }
@@ -73,11 +73,11 @@ public class MainActivity extends FragmentActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        users.add(new User(null, null, "第三个布局", null));
+                        users.add(new User(null, null, "第三个布局", null, null));
                         myRecyclerViewAdapter.notifyDataSetChanged();
                         Toast.makeText(MainActivity.this, "刷新了一条数据", Toast.LENGTH_SHORT).show();
                         // 加载完数据设置为不刷新状态，将下拉进度收起来
-                        recyclerView.scrollBy(0,30);
+                        recyclerView.scrollBy(0, 30);
                         mRefreshView.stopLoadMore();
                     }
                 }, 1200);
@@ -155,15 +155,16 @@ public class MainActivity extends FragmentActivity {
     //为了测试，特地将不同的布局的数据混乱的添加到list里
     private void initdata() {
         users = new ArrayList<User>();
-        users.add(new User("第一个布局", null, null, null));
-        users.add(new User(null, "第二个布局", null, null));
-        users.add(new User("第一个布局", null, null, null));
-        users.add(new User(null, null, "第三个布局", null));
-        users.add(new User(null, "第二个布局", null, null));
-        users.add(new User(null, null, "第三个布局", null));
-        users.add(new User(null, null, null, "第四个布局"));
-        users.add(new User(null, null, "第三个布局", null));
-        users.add(new User(null, "第二个布局", null, null));
-        users.add(new User("第一个布局", null, null, null));
+        users.add(new User("第一个布局", null, null, null,null));
+        users.add(new User(null, "第二个布局", null, null,null));
+        users.add(new User("第一个布局", null, null, null,null));
+        users.add(new User(null, null, "第三个布局", null,null));
+        users.add(new User(null, "第二个布局", null, null,null));
+        users.add(new User(null, null, "第三个布局", null,null));
+        users.add(new User(null, null, null, "第四个布局", null));
+        users.add(new User(null, null, "第三个布局", null,null));
+        users.add(new User(null, "第二个布局", null, null,null));
+        users.add(new User("第一个布局", null, null, null,null));
+        users.add(new User(null, null, null, null, "第五个布局"));
     }
 }
